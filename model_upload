@@ -1,0 +1,11 @@
+from roboflow import Roboflow
+
+rf = Roboflow(api_key="TVnYcfjtW5osSwH8F0ud")
+project = rf.workspace().project("dataset-datgmt")
+
+
+#can specify weights_filename, default is "weights/best.pt"
+version = project.version(3)
+
+#example1 - directory path is "training1/model1.pt" for yolov8 model
+version.deploy("yolov11", r"D:\DATGMT-main\runs-m-1000image\content\runs\segment\train\weights", "best.pt")
