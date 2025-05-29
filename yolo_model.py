@@ -23,7 +23,7 @@ config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 30)
 pipeline.start(config)
 
 # Load model YOLO
-model = YOLO(r'D:\DATGMT-main\runs-m-1000image\content\runs\segment\train\weights\best.pt')  # Thay bằng đường dẫn model của bạn
+model = YOLO(r'C:\Users\Thanh Nhan\Desktop\DATGMT\runs-n-1000img\content\runs\segment\train\weights\best.pt')  # Thay bằng đường dẫn model của bạn
 
 # Khởi tạo Deep SORT - chỉ track các bbox label 'box' (sẽ lọc phía dưới)
 tracker = DeepSort(max_age=30, n_init=3)
@@ -133,12 +133,12 @@ try:
         prev_time = curr_time
 
         # Detect với YOLO
-        results = model(color_image)[0]
+        results = model(color_image, verbose=False)[0]
 
         dets = []
         for box in results.boxes:
             conf = box.conf.item()
-            if conf < 0.7:
+            if conf < 0.65:  # Chỉ giữ các bbox có confidence >= 0.75
                 continue
             x1, y1, x2, y2 = box.xyxy[0].cpu().numpy()
             cls_id = int(box.cls[0].cpu().numpy())
